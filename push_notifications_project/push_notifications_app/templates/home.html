@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Push Notifications</title>
+</head>
+<body>
+    <h1>Push Notifications</h1>
+    <form id="message-form">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Enter message">
+        <button type="submit">Send</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#message-form').submit(function (event) {
+                event.preventDefault();
+                var message = $('input[name="message"]').val();
+                var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();  // Retrieve the CSRF token
+                $.ajax({
+                    url: '/receive_message/',
+                    method: 'POST',
+                    data: { 'message': message, 'csrfmiddlewaretoken': csrfToken },  // Include the CSRF token in the data
+                    success: function (data) {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            alert('Push notification sent successfully.');
+                        } else {
+                            alert('Error sending push notification.');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sent Messages</title>
+</head>
+<body>
+    <h1>Sent Messages</h1>
+    {% if messages %}
+  <ul>
+    {% for message in messages %}
+      <li>{{ message.text }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No messages found.</p>
+{% endif %}
+
+</body>
+</html>
